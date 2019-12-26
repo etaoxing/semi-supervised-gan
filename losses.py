@@ -5,9 +5,9 @@ import torch.nn.functional as F
 # Supervised Loss
 class LabeledLoss(nn.Module):
     def forward(self, y_pred_labeled, y_labeled, **kwargs):        
-        dist = torch.t(y_pred_labeled[:, y_labeled].squeeze(dim=1))
+        pdist = y_pred_labeled.gather(1, y_labeled.view(-1, 1)).squeeze(1)
         labeled = torch.logsumexp(y_pred_labeled, dim=1)
-        loss = -torch.mean(dist) + torch.mean(labeled)
+        loss = -torch.mean(pdist) + torch.mean(labeled)
         return loss
     
 # Unsupervised Loss
