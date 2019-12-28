@@ -19,7 +19,7 @@ class History:
         
         if viz_params['to_viz']:
             self.init_viz()
-            
+
     def to_df(self):
         if not self.viz_params['to_viz']:
             return self.df
@@ -66,7 +66,7 @@ class History:
                              y=metric, 
                              source=self.source, 
                              view=views[phase], 
-                             legend=phase,
+                             legend_label=phase,
                              marker=markers[i],
                              color=colors[i],
                              size=7,
@@ -104,8 +104,9 @@ class History:
                 push_notebook(self.viz_handle)
         if self.verbose == 1:
             print(self.record.computed)
+            print()
         self.df = self.df.append(self.record.computed, ignore_index=True)
-                
+
     def load_state_dict(self, state):
         # self.record = dill.loads(state['record']) # needed b/c of lambda functions in Metrics
         self.df = pd.DataFrame.from_dict(state['df'])

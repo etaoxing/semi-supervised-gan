@@ -37,10 +37,10 @@ class EpochRecord(Metric):
     """
     def __init__(self, metrics, **kwargs):
         self.metrics = metrics
-        super(EpochRecord, self).__init__(**kwargs)
+        super().__init__(**kwargs)
         
     def reset(self):
-        super(EpochRecord, self).reset()
+        super().reset()
         for metric in self.metrics: 
             metric.reset()
     
@@ -55,11 +55,11 @@ class EpochRecord(Metric):
     
 class ClassAccuracy(Metric):
     def __init__(self, num_classes, **kwargs):
-        super(ClassAccuracy, self).__init__(is_scalar=False, **kwargs)
+        super().__init__(is_scalar=False, **kwargs)
         self.num_classes = num_classes
         
     def reset(self):
-        super(ClassAccuracy, self).reset()
+        super().reset()
         self.correct = 0
         self.n = 0
         
@@ -72,22 +72,22 @@ class ClassAccuracy(Metric):
         y = to_onehot(y, self.num_classes)
         
         correct = torch.eq(predicted, y)
-        correct[1 - y.byte()] = 0
+        correct[(1 - y.byte()).bool()] = 0
         correct = torch.sum(correct, dim=0)
-                
+
         self.correct += correct
         self.n += torch.sum(y, dim=0)
                 
     def compute(self):
-        self.computed = torch.div(self.correct.float(), self.n.float()).numpy()
+        self.computed = torch.div(self.correct.float(), self.n.float()).cpu().numpy()
         # self.computed[torch.isnan(self.computed)] = 0
     
 class AverageAccuracy(Metric):
     def __init__(self, **kwargs):
-        super(AverageAccuracy, self).__init__(**kwargs)
+        super().__init__(**kwargs)
     
     def reset(self):
-        super(AverageAccuracy, self).reset()
+        super().reset()
         self.correct = 0
         self.n = 0
     
@@ -109,12 +109,12 @@ class AverageAccuracy(Metric):
     
 class Loss(Metric): 
     def __init__(self, loss_fn, batch_size=lambda x: x.shape[0], **kwargs):
-        super(Loss, self).__init__(**kwargs)
+        super().__init__(**kwargs)
         self.loss_fn = loss_fn
         self.batch_size = batch_size
     
     def reset(self):
-        super(Loss, self).reset()
+        super().reset()
         self.sum = 0
         self.n = 0
     
@@ -141,10 +141,10 @@ class Loss(Metric):
         
 class RunTime(Metric):
     def __init__self(self, **kwargs):
-        super(RunTime, self).__init__(**kwargs)
+        super().__init__(**kwargs)
         
     def reset(self):
-        super(RunTime, self).reset()
+        super().reset()
         self.start = None
         self.end = None
         
@@ -158,10 +158,10 @@ class RunTime(Metric):
         
 class FakeAccuracy(AverageAccuracy):
     def __init__(self, **kwargs):
-        super(FakeAccuracy, self).__init__(**kwargs)
+        super().__init__(**kwargs)
         
     def update(self, *args, y_pred_fake=None, fake_class=None, **kwargs):
         if y_pred_fake is None or fake_class is None:
             return torch.Tensor([0])
         y_fake = y_pred_fake.new_ones(y_pred_fake.shape[0]) * fake_class
-        super(FakeAccuracy, self).update((y_pred_fake, y_fake), **kwargs)
+        super().update((y_pred_fake, y_fake), **kwargs)
