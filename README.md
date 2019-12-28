@@ -2,9 +2,9 @@
 
 See `requirements.txt` for package versions. A Jupyter notebook `ssgan_notebook.ipynb` is also provided with Bokeh plots of live updated training metrics.
 
-> Note: implementation and parameters reported may vary from what the papers describe. 
+> Note: Implementation and hyperparameters used may vary slightly from what the papers describe. 
 
-## Example usage with MNIST
+## Example usage
 
 ```
 python ssgan_exp.py --dataset mnist --epochs 10 --perc_labeled 0.00167 --lr 0.003 --noise_dist uniform --use_weight_norm
@@ -12,7 +12,7 @@ python ssgan_exp.py --dataset mnist --epochs 10 --perc_labeled 0.00167 --lr 0.00
 python ssgan_exp.py --dataset mreo --epochs 100 --perc_labeled 0.08 --lr 0.0006 --noise_dist normal --no_eq_union
 ```
 
-## Results and Models
+## Results and models
 
 | Dataset | Labeled training data | Accuracy | Reference    | Checkpoint |
 | :-----: | :------------: | :------: | :----------: | :--------: |
