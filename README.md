@@ -19,6 +19,15 @@ python ssgan_exp.py --dataset mreo --epochs 100 --perc_labeled 0.08 --lr 0.0006 
 | MNIST   | 100 samples    | 0.9509   | [1], see Table 1 | [model](checkpoints/e10_ckpt_ssgan_mnist_perclabeled0,00167_noisesize100_noiseuniform_lr0,003_featmatch1_weightnorm1_gfaNone_equnion1_seed1000.pth) |
 | MREO    | 8%             | 0.8658   | [2], see Table 1 | [model](checkpoints/e100_ckpt_ssgan_mreo_perclabeled0,08_noisesize100_noisenormal_lr0,0006_featmatch1_weightnorm0_gfaNone_equnion0_seed1000.pth) |
 
+## Getting data
+MNIST data is used from `torchvision.datasets`.
+
+MREO data can be downloaded from [here](https://github.com/Healthcare-Robotics/mr-gan#download-the-mreo-dataset), we use the compact version.
+
+```
+tar -xvf data_processed_compact.tar.gz mreo_data/
+```
+
 ## References
 [1]: Tim Salimans, Ian Goodfellow, Wojciech Zaremba, Vicki Cheung, Alec Radford, and Xi Chen, ["Improved Techniques for Training GANs"](https://arxiv.org/abs/1606.03498), 2016.
 
